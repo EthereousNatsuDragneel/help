@@ -1,0 +1,2 @@
+const firebaseConfig={apiKey:"AIzaSyCFou4AhtzYrLZgkdfowoaGXlYwMKwwP2w",authDomain:"midnight-98167.firebaseapp.com",databaseURL:"https://midnight-98167.firebaseio.com",projectId:"midnight-98167",storageBucket:"midnight-98167.appspot.com",messagingSenderId:"313021560225",appId:"1:313021560225:web:34b557923a788f1ec847e0",measurementId:"G-GYNZ40W6QC"};
+export default firebaseConfig;
