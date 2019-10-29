@@ -1,2 +1,2 @@
-const firebaseConfig={apiKey:"AIzaSyCFou4AhtzYrLZgkdfowoaGXlYwMKwwP2w",authDomain:"midnight-98167.firebaseapp.com",databaseURL:"https://midnight-98167.firebaseio.com",projectId:"midnight-98167",storageBucket:"midnight-98167.appspot.com",messagingSenderId:"313021560225",appId:"1:313021560225:web:34b557923a788f1ec847e0",measurementId:"G-GYNZ40W6QC"};
+const firebaseConfig={apiKey: 'AIzaSyD2IrasmM3G0VXu725wXGqE-KKnS5afzxw',authDomain: 'test-5a37e.firebaseapp.com',databaseURL: 'https://test-5a37e.firebaseio.com',projectId: 'test-5a37e',storageBucket: 'test-5a37e.appspot.com',messagingSenderId: '1078332399159',appId: '1:1078332399159:web:f97c1b555881387ed7e9b2',measurementId: 'G-CFDV4SHGC4'};
 export default firebaseConfig;
