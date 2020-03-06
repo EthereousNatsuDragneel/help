@@ -45,7 +45,7 @@ def findSCC(g):
 g={}
 sccLengths,explored,finished=[],[],[]
 recent=0
-f=open("SCC.txt",'r')
+f=open("test.txt",'r')
 lines=f.readlines()
 f.close()
 for i in range(0,len(lines)):
