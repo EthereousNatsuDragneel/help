@@ -1,19 +1,65 @@
-def divineFinishTimes(g):
+def divineSCCs(r):
 	global stack,e
-	while stack:
-		dfs(stack[len(stack)-1])
+	l=875714
+	arr=[]
+	while(l>0):
+		le=1
+		if(e[l]==False):
+			l=l-1
+		else:
+			stack.append(l)
+			while stack:
+				le=SCCdfs(stack[len(stack)-1],le)
+			arr.append(le)
+	return arr
 
+def SCCdfs(v,z):
+	global stack,e,r
+	e[v]=False
+	length=len(stack)
+	for i in range(0,len(r[v])):
+		if(e[r[v][i]]==True):
+			e[r[v][i]]=False
+			z=z+1
+			stack.append(r[v][i])
+	if(length==len(stack)):
+		del stack[length-1]
+	return z
 
+def swap(r):
+	global finishTimes
+	new={}
+	l=list(finishTimes.keys())
+	for i in range(0,len(l)):
+		new[l[i]]=[]
+	for i in range(0,len(l)):
+		for j in range(0,len(r[l[i]])):
+			new[finishTimes[l[i]]].append(finishTimes[r[l[i]][j]])
+	return new
 
+def divineFinishTimes(g):
+	global e,stack
+	l=875714
+	while(l>0):
+		if(e[l]==True):
+			l=l-1
+		else:
+			stack.append(l)
+			while stack:
+				dfs(stack[len(stack)-1])
 
 def dfs(v):
 	global finishTimes,count,e,stack,g
+	e[v]=True
+	length=len(stack)
 	for i in range(0,len(g[v])):
 		if(e[g[v][i]]==False):
+			e[g[v][i]]=True
 			stack.append(g[v][i])
-	finishTimes[v]=count
-	count=count+1
-	del stack[len(stack)-1]
+	if(length==len(stack)):
+		finishTimes[v]=count
+		count=count+1
+		del stack[len(stack)-1]
 
 def makeGraphs():
 	g,r,e={},{},{}
@@ -29,9 +75,11 @@ def makeGraphs():
 		r[int(lines[i][1])].append(int(lines[i][0]))
 	return g,r,e
 
-stack=[875714]
+stack=[]
 finishTimes={}
 count=1
 g,r,e=makeGraphs()
 divineFinishTimes(g)
-print("Determined finish times")
+r=swap(r)
+a=divineSCCs(r)
+print("Almost there")
