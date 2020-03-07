@@ -7,24 +7,32 @@ def divineSCCs(r):
 		if(e[l]==False):
 			l=l-1
 		else:
+			global inc
+			inc={}
 			stack.append(l)
+			highest=0
 			while stack:
-				le=SCCdfs(stack[len(stack)-1],le)
-			arr.append(le)
+				le,highest=SCCdfs(stack[len(stack)-1],le,highest)
+			arr.append(highest)
 	return arr
 
-def SCCdfs(v,z):
+def SCCdfs(v,z,highest):
 	global stack,e,r
 	e[v]=False
+	if(z>highest):
+		highest=z
 	length=len(stack)
 	for i in range(0,len(r[v])):
 		if(e[r[v][i]]==True):
 			e[r[v][i]]=False
 			z=z+1
 			stack.append(r[v][i])
+		elif r[v][i] in inc:
+			highest=highest+inc[r[v][i]]
 	if(length==len(stack)):
+		z=z-1
 		del stack[length-1]
-	return z
+	return z,highest
 
 def swap(r):
 	global finishTimes
@@ -82,4 +90,7 @@ g,r,e=makeGraphs()
 divineFinishTimes(g)
 r=swap(r)
 a=divineSCCs(r)
-print("Almost there")
+print("Success")
+a.sort()
+u=len(a)
+print(a[u-1],a[u-2],a[u-3],a[u-4],a[u-5])
