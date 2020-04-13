@@ -101,29 +101,31 @@ def utility(board):
 	return 0
 
 def minimax(board):
-	availableMoves=actions(board)
 	possibleMoves=[]
+	availableMoves=actions(board)
+	scores=[]
+	for move in availableMoves:
+		new_board=result(board,move)
+		possibleMove={"pos":move,"utility":moveUtility(new_board)}
+		possibleMoves.append(possibleMove)
+		scores.append(possibleMove["utility"])
+	if player(board)=='O':
+		return possibleMoves[scores.index(min(scores))]["pos"]
+	else:
+		return possibleMoves[scores.index(max(scores))]["pos"]
+
+def moveUtility(board):
+	availableMoves=actions(board)
+	if terminal(board):
+		return utility(board)
+	scores=[]
 	for availableMove in availableMoves:
 		new_board=result(board,availableMove)
-		move={}
 		if terminal(new_board):
-			move["pos"]=availableMove
-			move["utility"]=utility(new_board)
+			scores.append(utility(new_board))
 		else:
-			move=minimax(new_board)
-		possibleMoves.append(move)
-	bestMove=None
-	del possibleMoves[0]
-	if player(board)=='O':
-		best=10
-		for move in possibleMoves:
-			if move["utility"]<best:
-				best=move["utility"]
-				bestMove=move["pos"]
-	else:
-		best=-10
-		for move in possibleMoves:
-			if move["utility"]>best:
-				best=move["utility"]
-				bestMove=move["pos"]
-	return bestMove
+			scores.append(moveUtility(new_board))
+	netUtility=0
+	for i in range(0,len(scores)):
+		netUtility=netUtility+scores[i]
+	return netUtility/len(scores)
