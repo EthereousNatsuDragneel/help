@@ -101,31 +101,22 @@ def utility(board):
 	return 0
 
 def minimax(board):
-	possibleMoves=[]
-	availableMoves=actions(board)
-	scores=[]
-	for move in availableMoves:
-		new_board=result(board,move)
-		possibleMove={"pos":move,"utility":moveUtility(new_board)}
-		possibleMoves.append(possibleMove)
-		scores.append(possibleMove["utility"])
 	if player(board)=='O':
-		return possibleMoves[scores.index(min(scores))]["pos"]
+		best={"pos":(-1,-1),"utility":math.inf}
 	else:
-		return possibleMoves[scores.index(max(scores))]["pos"]
-
-def moveUtility(board):
-	availableMoves=actions(board)
+		best={"pos":(-1,-1),"utility":-math.inf}
 	if terminal(board):
-		return utility(board)
-	scores=[]
-	for availableMove in availableMoves:
-		new_board=result(board,availableMove)
-		if terminal(new_board):
-			scores.append(utility(new_board))
+		score=utility(board)
+		return {"pos":(-1,-1),"utility":score}
+	for action in actions(board):
+		board=result(board,action)
+		score=minimax(board)
+		board[action[0]][action[1]]=None
+		score["pos"]=action
+		if player(board)=='O':
+			if score["utility"]<best["utility"]:
+				best=score
 		else:
-			scores.append(moveUtility(new_board))
-	netUtility=0
-	for i in range(0,len(scores)):
-		netUtility=netUtility+scores[i]
-	return netUtility/len(scores)
+			if score["utility"]>best["utility"]:
+				best=score
+	return best
